@@ -3,7 +3,7 @@ services:
   web:
     build: ./cryptotrac
     command: gunicorn cryptotrac.wsgi:application --bind 0.0.0.0:8000
-    volumes:
+    # volumes:
       # - static:/app/static
       # - Assets:/app/Assets
     expose:
@@ -34,7 +34,7 @@ services:
     build:
       context: ./cryptotrac
     command: celery -A cryptotrac.celery worker -l info
-    volumes:
+    # volumes:
       # - static:/app/static
     env_file:
       - ./.env
