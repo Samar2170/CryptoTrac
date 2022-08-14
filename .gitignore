@@ -1,5 +1,5 @@
 /venv/
-/cryptotrac/.env/
+/cryptotrac/.env
 
 /cryptotrac/*/__pycache__/
 
