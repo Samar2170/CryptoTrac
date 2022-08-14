@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 @app.task
 def fetch_price():
-    btc = Coin.objects.get(symbol='BTC')
+    btc = Coin.objects.filter(symbol='BTC').first()
     response = requests.get(COINGECKO_URL + "?ids="+ btc.coingecko_id +"&vs_currencies=inr", headers=HEADERS)
     data = response.json()
     price = data[btc.coingecko_id]['inr']

@@ -3,13 +3,12 @@ services:
   web:
     build: ./cryptotrac
     command: gunicorn cryptotrac.wsgi:application --bind 0.0.0.0:8000
-    # volumes:
-      # - static:/app/static
-      # - Assets:/app/Assets
+    volumes:
+      - static:/app/static
+      - Assets:/app/Assets
     expose:
       - 8000
-    env_file:
-      - ./.env
+
   nginx:
     build: ./nginx
     ports:
@@ -34,12 +33,26 @@ services:
     build:
       context: ./cryptotrac
     command: celery -A cryptotrac.celery worker -l info
-    # volumes:
-      # - static:/app/static
-    env_file:
-      - ./.env
+    volumes:
+      - static:/app/static
+    # env_file:
+    #   - ./.env
     restart: always
 
+  celerybeat:
+    image: celery:3.1
+    depends_on:
+      - redis
+      - web
+    build:
+      context: ./cryptotrac
+    command: celery -A cryptotrac.celery beat -l info
+    volumes:
+      - static:/app/static
+    # env_file:
+    #   - ./.env
+    restart: always
+  
 volumes:
   static:    
   Assets:
