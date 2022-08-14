@@ -1,0 +1,3 @@
+/venv/
+/cryptotrac/*/__pycache__/
+/cryptotrac/*/*/__pycache__/
